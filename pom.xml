@@ -41,11 +41,15 @@
         <!-- <jetty.contextPath>cxf-demo</jetty.contextPath> -->
         <jetty.contextPath></jetty.contextPath>
 
-        <cxf.version>2.4.1</cxf.version>
+        <cxf.version>2.4.10</cxf.version>
         <!-- these should be overriden by a custom profile in settings.xml -->
         <database.url>jdbc:mysql://localhost:3306/lipidhome</database.url>
         <database.user>lipidhome</database.user>
         <database.password>lipidhome</database.password>
+        <docker.base.image>tomcat:8</docker.base.image>
+        <docker.service.prefix>lipidhome</docker.service.prefix>
+        <docker.image.prefix>do1-aps-feris.isas.de:5000/lifs</docker.image.prefix>
+        <skip.docker>true</skip.docker>
     </properties>
 
     <build>
@@ -63,17 +67,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.10</version>
+                <version>6.1.26</version>
                 <configuration>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
@@ -83,6 +87,59 @@
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <stopKey/>
                     <stopPort/>
+                </configuration>
+            </plugin>
+            
+            <!--
+                            <configuration>
+              <from>
+                <image>tomcat:8.5-jre8-alpine</image>
+              </from>
+              <container>
+                
+                <appRoot>/usr/local/tomcat/webapps</appRoot>
+              </container>
+            </configuration>
+            -->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <from>
+                        <image>${docker.base.image}</image>
+                    </from>
+                    <to>
+                        <image>${docker.image.prefix}/${docker.service.prefix}-tomcat</image>
+                        <tags>
+                            <tag>${project.version}</tag>
+                            <!-- <tag>${project.version}${deploy.env}</tag> -->
+                        </tags>
+                    </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+                        </jvmFlags>
+                        <ports>
+                            <port>8080</port>
+                        </ports>
+                        <volumes>
+                            <volume>/tmp</volume>
+                        </volumes>
+                        <!--<user>1000:1000</user>-->
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                        <appRoot>/usr/local/tomcat/webapps/lipidhome</appRoot>
+                    </container>
+                    <skip>${skip.docker}</skip>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
                 </configuration>
             </plugin>
         </plugins>
@@ -119,17 +176,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.30</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.30</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.30</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -139,7 +196,7 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.3</version>
         </dependency>
 
 
@@ -152,7 +209,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.18</version>
+            <version>8.0.21</version>
         </dependency>
         <dependency>
             <groupId>net.sf.jni-inchi</groupId>
@@ -167,4 +224,12 @@
     </dependencies>
 
     <description>Lipid data repository accession</description>
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <skip.docker>false</skip.docker>
+            </properties>
+        </profile>
+    </profiles>
 </project>
