@@ -63,11 +63,11 @@ Ext.onReady(function() {
         return;
     }
 	Ext.QuickTips.init();
-    Ext.Loader.setPath('Ext.ux', 'extjs/examples/ux/');
-    Ext.require([
-        'Ext.ux.RowExpander',
-        'Ext.ux.grid.FiltersFeature'
-    ]);
+//    Ext.Loader.setPath('Ext.ux', 'extjs/examples/ux/');
+//    Ext.require([
+//        'Ext.ux.RowExpander',
+//        'Ext.ux.grid.FiltersFeature'
+//    ]);
 
     var title = Ext.get("web-title");
     if(!Ext.isEmpty(title)){
