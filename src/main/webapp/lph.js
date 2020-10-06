@@ -62,6 +62,7 @@ Ext.onReady(function() {
         location.href = "./supported_browsers.html"
         return;
     }
+    Ext.Loader.setConfig({enabled:true});
 	Ext.QuickTips.init();
 //    Ext.Loader.setPath('Ext.ux', 'extjs/examples/ux/');
 //    Ext.require([
