@@ -10,6 +10,8 @@ import uk.ac.ebi.lipidhome.service.result.model.SpecieSummary;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -47,6 +49,7 @@ public class SpecieServiceImpl extends LipidService implements SpecieService{
 			
 		} catch (RuntimeException e) {
 			String errorMessage = "Record with id " + id + " is unavailable.";
+                        Logger.getLogger(CategoryServiceImpl.class.getSimpleName()).log(Level.SEVERE, errorMessage, e);
 			result = new Result(errorMessage);
 		}
 		return result2Response(result);
@@ -71,6 +74,7 @@ public class SpecieServiceImpl extends LipidService implements SpecieService{
 			result = new Result(converter.getLipidObjectList(list));
 		} catch (RuntimeException e) {
 			String errorMessage = "Record with id " + id + " is unavailable.";
+                        Logger.getLogger(CategoryServiceImpl.class.getSimpleName()).log(Level.SEVERE, errorMessage, e);
 			result = new Result(errorMessage);
 		}
 		return result2Response(result);

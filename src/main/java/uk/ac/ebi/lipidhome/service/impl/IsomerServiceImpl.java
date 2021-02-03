@@ -1,5 +1,7 @@
 package uk.ac.ebi.lipidhome.service.impl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import uk.ac.ebi.lipidhome.core.dao.IsomerDao;
 import uk.ac.ebi.lipidhome.core.model.Isomer;
 import uk.ac.ebi.lipidhome.service.IsomerService;
@@ -26,6 +28,7 @@ public class IsomerServiceImpl extends LipidService implements IsomerService{
             result = new Result(isomerSummary);
         }catch (RuntimeException e) {
             String errorMessage = "Record with id " + id + " is unavailable.";
+            Logger.getLogger(CategoryServiceImpl.class.getSimpleName()).log(Level.SEVERE, errorMessage, e);
             result = new Result(errorMessage);
         }
 

@@ -28,7 +28,7 @@ Ext.define('lph.tools.searchengine.SearchEnginePane', {
         
         this.output = Ext.create('lph.tools.searchengine.output.OutputPane');
 
-	    accordion.add(this.output);
+        accordion.add(this.output);
 
         this.add(accordion);
 

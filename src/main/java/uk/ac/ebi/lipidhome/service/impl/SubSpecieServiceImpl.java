@@ -23,6 +23,8 @@ import uk.ac.ebi.lipidhome.service.result.model.SubSpecieSummary;
 
 import javax.ws.rs.core.Response;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,6 +61,7 @@ public class SubSpecieServiceImpl extends LipidService implements SubSpecieServi
 
         } catch (RuntimeException e) {
             String errorMessage = "Record with id " + id + " is unavailable.";
+            Logger.getLogger(CategoryServiceImpl.class.getSimpleName()).log(Level.SEVERE, errorMessage, e);
             result = new Result(errorMessage);
         }
         return result2Response(result);
@@ -99,6 +102,7 @@ public class SubSpecieServiceImpl extends LipidService implements SubSpecieServi
             result = new Result(converter.getLipidObjectList(theoreticalIsomers));
         } catch (RuntimeException e) {
             String errorMessage = "Record with id " + id + " is unavailable.";
+            Logger.getLogger(CategoryServiceImpl.class.getSimpleName()).log(Level.SEVERE, errorMessage, e);
             result = new Result(errorMessage);
         }
 
@@ -144,6 +148,7 @@ public class SubSpecieServiceImpl extends LipidService implements SubSpecieServi
             }
 
         }catch(LNetMoleculeGeneratorException lmge){
+            Logger.getLogger(CategoryServiceImpl.class.getSimpleName()).log(Level.SEVERE, "Error during molecule generation", lmge);
             lmge.printStackTrace();
         }
 
