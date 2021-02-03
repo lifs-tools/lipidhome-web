@@ -86,6 +86,21 @@
                     <stopPort/>
                 </configuration>
             </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>xml</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>js</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>sql</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>template</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>mol</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
