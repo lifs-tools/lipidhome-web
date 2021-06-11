@@ -47,7 +47,7 @@
         <database.password>lipidhome</database.password>
         <docker.base.image>tomcat:8</docker.base.image>
         <docker.service.prefix>lipidhome</docker.service.prefix>
-	<docker.image.prefix>docker.lifs-tools.org/lifs/</docker.image.prefix>
+        <docker.image.prefix>docker.lifs-tools.org/lifs/</docker.image.prefix>
         <skip.docker>true</skip.docker>
     </properties>
 
@@ -107,7 +107,7 @@
                 <plugin>
                     <groupId>com.google.cloud.tools</groupId>
                     <artifactId>jib-maven-plugin</artifactId>
-                    <version>2.5.2</version>
+                    <version>3.1.1</version>
                     <configuration>
                         <from>
                             <image>${docker.base.image}</image>
@@ -118,6 +118,10 @@
                                 <tag>${project.version}</tag>
                                 <!--<tag>${project.version}${deploy.env}</tag>--> 
                             </tags>
+                            <auth>
+                                <username>${env.REGISTRY_USERNAME}</username>
+                                <password>${env.REGISTRY_PASSWORD}</password>
+                            </auth>
                         </to>
                         <container>
                             <jvmFlags>
