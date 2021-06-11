@@ -47,7 +47,7 @@
         <database.password>lipidhome</database.password>
         <docker.base.image>tomcat:8</docker.base.image>
         <docker.service.prefix>lipidhome</docker.service.prefix>
-        <docker.image.prefix>lifs/</docker.image.prefix>
+	<docker.image.prefix>docker.lifs-tools.org/lifs/</docker.image.prefix>
         <skip.docker>true</skip.docker>
     </properties>
 
